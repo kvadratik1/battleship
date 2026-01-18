@@ -1,0 +1,5 @@
+add folder 
+delete folder
+add to do with title, description, dueDate and priority
+delete to do 
+storage has to be persistent
