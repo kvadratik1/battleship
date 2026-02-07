@@ -1,4 +1,6 @@
-class Gameboard {
+import Ship from "./ship.js";
+
+export default class Gameboard {
   constructor(size = 10) {
     this.size = size;
 
@@ -30,20 +32,25 @@ class Gameboard {
   receiveAttack([x, y]) {
     const cell = this.board[x][y];
 
-    if (cell === "miss" || cell === "hit") {
+    // уже стреляли
+    if (cell === "miss" || cell?.wasHit) {
       return "already attacked";
     }
 
+    // промах
     if (cell === null) {
       this.board[x][y] = "miss";
       this.missedHits.push([x, y]);
       return "miss";
     }
 
+    // 🎯 попадание по кораблю
     cell.hit();
-    this.board[x][y] = "hit";
+    cell.wasHit = true;
     return "hit";
   }
 
-  allShipsSunk() {}
+  allShipsSunk() {
+    return this.ships.every((ship) => ship.isSunk());
+  }
 }
