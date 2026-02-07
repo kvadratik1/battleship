@@ -1,3 +1,23 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.main-container {
+  display: grid;
+  grid-template-rows: 10% 80% 10%;
+  height: 100%;
+  width: 100%;
+}
+
 #user-board,
 #computer-board {
   display: grid;
