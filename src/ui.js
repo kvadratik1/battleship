@@ -16,7 +16,7 @@ export default function renderGameboard(
 
       if (cell === "miss") {
         cellDiv.classList.add("miss");
-      } else if (cell?.wasHit) {
+      } else if (cell === "hit") {
         cellDiv.classList.add("hit");
       } else if (cell !== null && player !== "computer") {
         cellDiv.classList.add("ship");

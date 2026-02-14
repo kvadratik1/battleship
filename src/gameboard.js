@@ -46,7 +46,7 @@ export default class Gameboard {
 
     // 🎯 попадание по кораблю
     cell.hit();
-    cell.wasHit = true;
+    this.board[x][y] = "hit";
     return "hit";
   }
 

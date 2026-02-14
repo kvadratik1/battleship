@@ -9,6 +9,7 @@ export default class Ship {
     if (this.sunk) return;
     this.hits++;
     this.isSunk();
+    console.log("this is a hit function", this.hit, this.sunk);
   }
 
   isSunk() {
