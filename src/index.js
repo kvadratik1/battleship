@@ -17,16 +17,7 @@ function showMessage(text) {
 }
 
 function autoPlaceShips(board) {
-  board.placeShip(3, [
-    [0, 0],
-    [0, 1],
-    [0, 2],
-  ]);
-  board.placeShip(2, [
-    [2, 2],
-    [3, 2],
-  ]);
-  board.placeShip(1, [[5, 5]]);
+  board.placeShip(3, { x: 0, y: 0 }, "vertical");
 }
 
 function startNewGame() {
@@ -38,8 +29,7 @@ function startNewGame() {
   // Place ships for player and computer
 
   renderBoards();
-  showMessage("Your turn! Click on the enemy board to attack.");
-  // showMessage("Your turn! Click on the enemy board to attack.");
+  showMessage("Click on the enemy board to attack.");
 }
 
 function renderBoards() {
@@ -63,7 +53,7 @@ function handleComputerAttack() {
   console.log(result);
 
   if (player.gameboard.allShipsSunk()) {
-    //showMessage("Machine won!");
+    showMessage("Machine won!");
     gameOver = true;
   }
 
@@ -79,12 +69,11 @@ function handlePlayerAttack(x, y) {
   renderBoards();
 
   if (computer.gameboard.allShipsSunk()) {
-    //showMessage("Congratulations! You won!");
+    showMessage("Congratulations! You won!");
     gameOver = true;
     return;
   }
 
-  // showMessage("Computer's turn...");
   handleComputerAttack();
 }
 

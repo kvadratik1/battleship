@@ -12,18 +12,43 @@ export default class Gameboard {
     this.ships = [];
   }
 
-  placeShip(length, coordinates) {
+  placeShip(length, coordinates, direction) {
+    const { x, y } = coordinates;
     const ship = new Ship(length);
 
-    coordinates.forEach(([x, y]) => {
-      if (this.board[x][y] !== null) {
-        throw new Error("Position already occupied by another ship");
-      }
-    });
+    if (x < 0 || y < 0) {
+      throw new Error("Coordinates cannot be negative");
+    }
 
-    coordinates.forEach(([x, y]) => {
-      this.board[x][y] = ship;
-    });
+    if (direction !== "vertical" && direction !== "horizontal") {
+      throw new Error("Direction must be 'vertical' or 'horizontal'");
+    }
+
+    for (let i = 0; i < length; i++) {
+      if (direction === "vertical") {
+        if (y + i >= this.size) {
+          throw new Error("Ship out of bounds");
+        }
+        if (this.board[x][y + i] !== null) {
+          throw new Error("Position already occupied by another ship");
+        }
+      } else if (direction === "horizontal") {
+        if (x + i >= this.size) {
+          throw new Error("Ship out of bounds");
+        }
+        if (this.board[x + i][y] !== null) {
+          throw new Error("Position already occupied by another ship");
+        }
+      }
+    }
+
+    for (let i = 0; i < length; i++) {
+      if (direction === "vertical") {
+        this.board[x][y + i] = ship;
+      } else if (direction === "horizontal") {
+        this.board[x + i][y] = ship;
+      }
+    }
 
     this.ships.push(ship);
     return ship;
@@ -32,19 +57,16 @@ export default class Gameboard {
   receiveAttack([x, y]) {
     const cell = this.board[x][y];
 
-    // уже стреляли
     if (cell === "miss" || cell?.wasHit) {
       return "already attacked";
     }
 
-    // промах
     if (cell === null) {
       this.board[x][y] = "miss";
       this.missedHits.push([x, y]);
       return "miss";
     }
 
-    // 🎯 попадание по кораблю
     cell.hit();
     this.board[x][y] = "hit";
     return "hit";
