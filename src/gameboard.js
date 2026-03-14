@@ -55,9 +55,13 @@ export default class Gameboard {
   }
 
   receiveAttack([x, y]) {
+    if (x < 0 || y < 0 || x >= this.size || y >= this.size) {
+      return "invalid";
+    }
+
     const cell = this.board[x][y];
 
-    if (cell === "miss" || cell?.wasHit) {
+    if (cell === "miss" || cell === "hit") {
       return "already attacked";
     }
 

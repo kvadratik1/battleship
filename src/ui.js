@@ -4,7 +4,7 @@ export default function renderGameboard(
   player,
   onCellClick
 ) {
-  container.innerHTML = "";
+  container.innerHTML = ""; // очищаем старую доску
   const size = gameboard.size;
 
   for (let i = 0; i < size; i++) {
@@ -14,15 +14,17 @@ export default function renderGameboard(
 
       const cell = gameboard.board[i][j];
 
+      // Визуализация попаданий
       if (cell === "miss") {
         cellDiv.classList.add("miss");
       } else if (cell === "hit") {
         cellDiv.classList.add("hit");
       } else if (cell !== null && player !== "computer") {
-        cellDiv.classList.add("ship");
+        cellDiv.classList.add("ship"); // показываем корабли игрока
       }
 
-      if (onCellClick && cell !== "miss" && !cell?.wasHit) {
+      // Навешиваем клик только на клетки компьютера, которые еще не атакованы
+      if (onCellClick && cell !== "hit" && cell !== "miss") {
         cellDiv.addEventListener("click", () => onCellClick(i, j));
       }
 
